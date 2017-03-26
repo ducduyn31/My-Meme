@@ -5,7 +5,7 @@ function loadInteTxt(){
 	if(document.getElementById('text') && document.getElementById('text').tagName === "BUTTON"){
 		
 		var btn = document.getElementById('text');
-		btn.innerHTML = "Insert Content";
+		btn.innerHTML = "Insert Contents";
 		btn.className += "btn";
 		
 		btn.addEventListener('click', loadToolTxt, false);
@@ -14,7 +14,7 @@ function loadInteTxt(){
 window.addEventListener('load', loadInteTxt, false);
 
 //Load Tool
-var content, container, txtContent, fcolor, Acolor, submit, sign, fSize;
+var content, container, txtContent, fcolor, Acolor, submit, sign, fSize, Aopa;
 function loadToolTxt(){
 	"use strict";
 	unloadToolTxt();
@@ -44,12 +44,12 @@ function loadToolTxt(){
 	container.appendChild(sign);
 	
 	//Font size choser
-	if(bground!==null){
+	if(bground!==null && bground !== undefined){
 		var tit3 = document.createElement('p');
 		tit3.innerHTML = 'Font Size';
 		container.appendChild(tit3);
 		fSize = document.createElement('select');
-		
+		fSize.setAttribute('id', 'fsize');
 		for(var i = 10; i>1; i--){
 			var z = Math.round(bground.height*0.8*0.9*0.9/i);
 			var v = document.createElement('option');
@@ -65,15 +65,39 @@ function loadToolTxt(){
 	tit4.innerHTML = 'Font Color';
 	container.appendChild(tit4);
 	fcolor = document.createElement('input');
-	fcolor.setAttribute('class', 'jscolor');
-	fcolor.setAttribute('value', '000000');
+	fcolor.setAttribute('id', 'fcolor');
+	fcolor.setAttribute('autocomplete', 'on');
+	var picker = new jscolor(fcolor);
 	container.appendChild(fcolor);
+	
+	//Area Color
+	var tit5 = document.createElement('p');
+	tit5.innerHTML = 'Area Color';
+	container.appendChild(tit5);
+	Acolor = document.createElement('input');
+	Acolor.setAttribute('id', 'acolor');
+	Acolor.setAttribute('autocomplete', 'on');
+	var picker2 = new jscolor(Acolor);
+	container.appendChild(Acolor);
+	
+	//Area Opacity
+	var tit6 = document.createElement('p');
+	tit6.innerHTML = 'Opacity';
+	container.appendChild(tit6);
+	Aopa = document.createElement('input');
+	Aopa.setAttribute('id', 'aopa');
+	Aopa.setAttribute('type', 'range');
+	Aopa.setAttribute('max', '1.0');
+	Aopa.setAttribute('min', '0.0');
+	Aopa.setAttribute('step', '0.01');
+	Aopa.setAttribute('defaultValue', '0.6');
+	container.appendChild(Aopa);
 	
 	submit = document.createElement('button');
 	submit.innerHTML = 'Update Text';
 	submit.setAttribute('class', 'btn');
 	submit.setAttribute('style', 'float: right; margin: 30px;');
-	submit.addEventListener('click', updateText, false);
+	submit.addEventListener('click', updateContent, false);
 	container.appendChild(submit);
 }
 
